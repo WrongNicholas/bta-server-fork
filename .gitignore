@@ -1,0 +1,5 @@
+.gradle/
+build/
+
+tools/decompile/out/
+tools/decompile/tmp/

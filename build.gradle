@@ -1,0 +1,84 @@
+plugins {
+  id 'java'
+  id 'application'
+  id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = "local"
+version = "0.1.0"
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+def decompRoot = file("tools/decompile/out/bta-server-src")
+
+sourceSets {
+  main {
+    java {
+      srcDirs = [decompRoot]
+      include("**/*.java")
+
+      // exclude decompiled third-party libs
+      exclude(
+        "com/mojang/**",
+        "org/apache/logging/**",
+        "org/slf4j/**",
+        "org/apache/commons/**",
+        "it/unimi/**",
+        "kotlin/**",
+        "com/google/gson/**",
+
+        // temporarily exclude command framework
+        "net/minecraft/core/net/command/**"
+      )
+    }
+    resources {
+      // include everything
+      srcDirs = [decompRoot]
+      exclude("**/*.java")
+    }
+  }
+  test {
+    java { srcDirs = [] }
+    resources { srcDirs = [] }
+  }
+}
+
+tasks.withType(JavaCompile).configureEach {
+  options.encoding = "UTF-8"
+  // don't fail build on unchecked/raw warnings
+  options.compilerArgs += ["-Xlint:none"]
+}
+
+application {
+  mainClass = "net.minecraft.server.MinecraftServer"
+}
+
+tasks.jar {
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+dependencies {
+  implementation files("libs/bta.v7.3_04.server.jar")
+  implementation "org.slf4j:slf4j-api:2.0.7"
+
+  implementation "org.apache.logging.log4j:log4j-api:2.19.0"
+  implementation "org.apache.logging.log4j:log4j-core:2.19.0"
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:2.19.0"
+  implementation "com.google.code.gson:gson:2.10.1"
+}
+
+jar {
+  manifest {
+    attributes(
+      'Main-Class': 'net.minecraft.server.Main'
+    )
+  }
+}

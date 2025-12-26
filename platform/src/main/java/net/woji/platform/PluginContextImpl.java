@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import java.nio.file.Path;
 
 import net.woji.api.PluginContext;
+import net.woji.api.event.EventBus;
 
 public class PluginContextImpl implements PluginContext {
   private final Logger logger;
@@ -22,5 +23,10 @@ public class PluginContextImpl implements PluginContext {
   public Path getDataFolder()
   {
     return null;
+  }
+
+  @Override 
+  public EventBus getEventBus() {
+    return PlatformCore.getEventBus();
   }
 }

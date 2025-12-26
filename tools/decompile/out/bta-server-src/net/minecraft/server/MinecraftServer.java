@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import net.woji.api.event.ServerTickEvent;
+
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.logging.LogUtils;
 import com.mojang.nbt.tags.CompoundTag;
@@ -561,6 +563,8 @@ public class MinecraftServer implements Runnable, ICommandListener, MinecraftAcc
    public void run() {
       try {
          if (this.startServer()) {
+
+            int tickCounter = 0;
             PLATFORM_CORE.init(this);
             PLATFORM_CORE.enablePlugins();
             
@@ -596,6 +600,7 @@ public class MinecraftServer implements Runnable, ICommandListener, MinecraftAcc
                      }
 
                      if (i % 5 == 0) {
+                        PLATFORM_CORE.getEventBus().post(new ServerTickEvent(++tickCounter));
                         this.doTick();
                         i = 0;
                      }

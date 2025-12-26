@@ -1,0 +1,396 @@
+package net.minecraft.core.item;
+
+import net.minecraft.core.achievement.stat.Stat;
+import net.minecraft.core.achievement.stat.StatList;
+import net.minecraft.core.block.Blocks;
+import net.minecraft.core.item.material.ArmorMaterial;
+import net.minecraft.core.item.material.ToolMaterial;
+import net.minecraft.core.item.tag.ItemTags;
+import net.minecraft.core.item.tool.ItemToolAxe;
+import net.minecraft.core.item.tool.ItemToolHoe;
+import net.minecraft.core.item.tool.ItemToolPickaxe;
+import net.minecraft.core.item.tool.ItemToolShears;
+import net.minecraft.core.item.tool.ItemToolShovel;
+import net.minecraft.core.item.tool.ItemToolSword;
+
+public final class Items {
+   public static Item TOOL_SHOVEL_IRON;
+   public static Item TOOL_PICKAXE_IRON;
+   public static Item TOOL_AXE_IRON;
+   public static Item TOOL_FIRESTRIKER_IRON;
+   public static Item FOOD_APPLE;
+   public static Item TOOL_BOW;
+   public static Item AMMO_ARROW;
+   public static Item COAL;
+   public static Item DIAMOND;
+   public static Item INGOT_IRON;
+   public static Item INGOT_GOLD;
+   public static Item TOOL_SWORD_IRON;
+   public static Item TOOL_SWORD_WOOD;
+   public static Item TOOL_SHOVEL_WOOD;
+   public static Item TOOL_PICKAXE_WOOD;
+   public static Item TOOL_AXE_WOOD;
+   public static Item TOOL_SWORD_STONE;
+   public static Item TOOL_SHOVEL_STONE;
+   public static Item TOOL_PICKAXE_STONE;
+   public static Item TOOL_AXE_STONE;
+   public static Item TOOL_SWORD_DIAMOND;
+   public static Item TOOL_SHOVEL_DIAMOND;
+   public static Item TOOL_PICKAXE_DIAMOND;
+   public static Item TOOL_AXE_DIAMOND;
+   public static Item STICK;
+   public static Item BOWL;
+   public static Item FOOD_STEW_MUSHROOM;
+   public static Item TOOL_SWORD_GOLD;
+   public static Item TOOL_SHOVEL_GOLD;
+   public static Item TOOL_PICKAXE_GOLD;
+   public static Item TOOL_AXE_GOLD;
+   public static Item STRING;
+   public static Item FEATHER_CHICKEN;
+   public static Item SULPHUR;
+   public static Item TOOL_HOE_WOOD;
+   public static Item TOOL_HOE_STONE;
+   public static Item TOOL_HOE_IRON;
+   public static Item TOOL_HOE_DIAMOND;
+   public static Item TOOL_HOE_GOLD;
+   public static Item SEEDS_WHEAT;
+   public static Item WHEAT;
+   public static Item FOOD_BREAD;
+   public static Item ARMOR_HELMET_LEATHER;
+   public static Item ARMOR_CHESTPLATE_LEATHER;
+   public static Item ARMOR_LEGGINGS_LEATHER;
+   public static Item ARMOR_BOOTS_LEATHER;
+   public static Item ARMOR_HELMET_CHAINMAIL;
+   public static Item ARMOR_CHESTPLATE_CHAINMAIL;
+   public static Item ARMOR_LEGGINGS_CHAINMAIL;
+   public static Item ARMOR_BOOTS_CHAINMAIL;
+   public static Item ARMOR_HELMET_IRON;
+   public static Item ARMOR_CHESTPLATE_IRON;
+   public static Item ARMOR_LEGGINGS_IRON;
+   public static Item ARMOR_BOOTS_IRON;
+   public static Item ARMOR_HELMET_DIAMOND;
+   public static Item ARMOR_CHESTPLATE_DIAMOND;
+   public static Item ARMOR_LEGGINGS_DIAMOND;
+   public static Item ARMOR_BOOTS_DIAMOND;
+   public static Item ARMOR_HELMET_GOLD;
+   public static Item ARMOR_CHESTPLATE_GOLD;
+   public static Item ARMOR_LEGGINGS_GOLD;
+   public static Item ARMOR_BOOTS_GOLD;
+   public static Item FLINT;
+   public static Item FOOD_PORKCHOP_RAW;
+   public static Item FOOD_PORKCHOP_COOKED;
+   public static Item PAINTING;
+   public static Item FOOD_APPLE_GOLD;
+   public static Item SIGN;
+   public static Item DOOR_OAK;
+   public static Item BUCKET;
+   public static Item BUCKET_WATER;
+   public static Item BUCKET_LAVA;
+   public static Item MINECART;
+   public static Item SADDLE;
+   public static Item DOOR_IRON;
+   public static Item DUST_REDSTONE;
+   public static Item AMMO_SNOWBALL;
+   public static Item BOAT;
+   public static Item LEATHER;
+   public static Item BUCKET_MILK;
+   public static Item BRICK_CLAY;
+   public static Item CLAY;
+   public static Item SUGARCANE;
+   public static Item PAPER;
+   public static Item BOOK;
+   public static Item SLIMEBALL;
+   public static Item MINECART_CHEST;
+   public static Item MINECART_FURNACE;
+   public static Item EGG_CHICKEN;
+   public static Item TOOL_COMPASS;
+   public static Item TOOL_FISHINGROD;
+   public static Item TOOL_CLOCK;
+   public static Item DUST_GLOWSTONE;
+   public static Item FOOD_FISH_RAW;
+   public static Item FOOD_FISH_COOKED;
+   public static Item DYE;
+   public static Item BONE;
+   public static Item DUST_SUGAR;
+   public static Item FOOD_CAKE;
+   public static Item BED;
+   public static Item REPEATER;
+   public static Item FOOD_COOKIE;
+   public static ItemMap MAP;
+   public static ItemToolShears TOOL_SHEARS;
+   public static Item RECORD_13;
+   public static Item RECORD_CAT;
+   public static Item RECORD_BLOCKS;
+   public static Item RECORD_CHIRP;
+   public static Item RECORD_FAR;
+   public static Item RECORD_MALL;
+   public static Item RECORD_MELLOHI;
+   public static Item RECORD_STAL;
+   public static Item RECORD_STRAD;
+   public static Item RECORD_WARD;
+   public static Item RECORD_WAIT;
+   public static Item RECORD_DOG;
+   public static Item NETHERCOAL;
+   public static Item ARMOR_HELMET_STEEL;
+   public static Item ARMOR_CHESTPLATE_STEEL;
+   public static Item ARMOR_LEGGINGS_STEEL;
+   public static Item ARMOR_BOOTS_STEEL;
+   public static Item TOOL_SWORD_STEEL;
+   public static Item TOOL_SHOVEL_STEEL;
+   public static Item TOOL_PICKAXE_STEEL;
+   public static Item TOOL_AXE_STEEL;
+   public static Item TOOL_HOE_STEEL;
+   public static Item INGOT_STEEL;
+   public static Item INGOT_STEEL_CRUDE;
+   public static Item AMMO_FIREBALL;
+   public static Item ARMOR_QUIVER_GOLD;
+   public static Item HANDCANNON_UNLOADED;
+   public static Item CHAINLINK;
+   public static Item CLOTH;
+   public static Item AMMO_CHARGE_EXPLOSIVE;
+   public static Item HANDCANNON_LOADED;
+   public static Item AMMO_ARROW_GOLD;
+   public static Item ARMOR_QUIVER;
+   public static Item TOOL_CALENDAR;
+   public static Item ORE_RAW_GOLD;
+   public static Item ORE_RAW_IRON;
+   public static Item QUARTZ;
+   public static Item OLIVINE;
+   public static Item AMMO_PEBBLE;
+   public static Item FOOD_CHERRY;
+   public static Item BUCKET_ICECREAM;
+   public static Item AMMO_ARROW_PURPLE;
+   public static Item LABEL;
+   public static Item JAR;
+   public static Item LANTERN_FIREFLY_GREEN;
+   public static Item LANTERN_FIREFLY_BLUE;
+   public static Item LANTERN_FIREFLY_ORANGE;
+   public static Item LANTERN_FIREFLY_RED;
+   public static Item BASKET;
+   public static Item FLAG;
+   public static Item ARMOR_BOOTS_ICESKATES;
+   public static ItemToolShears TOOL_SHEARS_STEEL;
+   public static Item TOOL_FIRESTRIKER_STEEL;
+   public static Item SEEDS_PUMPKIN;
+   public static Item SEAT;
+   public static Item DOOR_OAK_PAINTED;
+   public static Item DOOR_GLASS;
+   public static Item ROPE;
+   public static Item FOOD_PUMPKIN_PIE;
+   public static Item WAND_MONSTER_SPAWNER;
+   public static Item DOOR_STEEL;
+   public static Item PAINTBRUSH;
+   public static Item SIGN_PAINTED;
+   private static boolean hasInit = false;
+
+   public static void init() {
+      if (!hasInit) {
+         hasInit = true;
+         setupItems();
+         initStats();
+      }
+   }
+
+   private static void initStats() {
+      StatList.initReplaceMap();
+
+      for (int i = 0; i < Item.itemsList.length; i++) {
+         Item item = Item.getItem(i);
+         if (item != null && (i >= Blocks.blocksList.length || Blocks.getBlock(i).getEnableStats())) {
+            item.createStat("stat_picked_up", "");
+            Stat used = item.createStat("stat_used", "stat.useItem");
+            if (i >= Blocks.blocksList.length) {
+               StatList.usedItemStats.add(used);
+            }
+
+            if (item.isDamagable()) {
+               item.createStat("stat_broken", "stat.breakItem");
+            }
+
+            if (i < Blocks.blocksList.length) {
+               item.createStat("stat_mined", "stat.mineBlock");
+            }
+         }
+      }
+   }
+
+   private static void setupItems() {
+      TOOL_SHOVEL_IRON = new ItemToolShovel("tool.shovel.iron", "minecraft:item/tool_shovel_iron", 16384, ToolMaterial.iron);
+      TOOL_PICKAXE_IRON = new ItemToolPickaxe("tool.pickaxe.iron", "minecraft:item/tool_pickaxe_iron", 16385, ToolMaterial.iron);
+      TOOL_AXE_IRON = new ItemToolAxe("tool.axe.iron", "minecraft:item/tool_axe_iron", 16386, ToolMaterial.iron);
+      TOOL_FIRESTRIKER_IRON = new ItemFireStriker("tool.firestriker", "minecraft:item/tool_firestriker_iron", 16387);
+      FOOD_APPLE = new ItemFood("food.apple", "minecraft:item/food_apple", 16388, 4, 8, false, 8);
+      TOOL_BOW = new ItemBow("tool.bow", "minecraft:item/tool_bow", 16389);
+      AMMO_ARROW = new Item("ammo.arrow", "minecraft:item/ammo_arrow", 16390);
+      COAL = new ItemCoal("coal", "minecraft:item/coal", 16391);
+      DIAMOND = new Item("diamond", "minecraft:item/diamond", 16392);
+      INGOT_IRON = new Item("ingot.iron", "minecraft:item/ingot_iron", 16393);
+      INGOT_GOLD = new Item("ingot.gold", "minecraft:item/ingot_gold", 16394);
+      TOOL_SWORD_IRON = new ItemToolSword("tool.sword.iron", "minecraft:item/tool_sword_iron", 16395, ToolMaterial.iron)
+         .withTags(ItemTags.PREVENT_CREATIVE_MINING);
+      TOOL_SWORD_WOOD = new ItemToolSword("tool.sword.wood", "minecraft:item/tool_sword_wood", 16396, ToolMaterial.wood)
+         .withTags(ItemTags.PREVENT_CREATIVE_MINING);
+      TOOL_SHOVEL_WOOD = new ItemToolShovel("tool.shovel.wood", "minecraft:item/tool_shovel_wood", 16397, ToolMaterial.wood);
+      TOOL_PICKAXE_WOOD = new ItemToolPickaxe("tool.pickaxe.wood", "minecraft:item/tool_pickaxe_wood", 16398, ToolMaterial.wood);
+      TOOL_AXE_WOOD = new ItemToolAxe("tool.axe.wood", "minecraft:item/tool_axe_wood", 16399, ToolMaterial.wood);
+      TOOL_SWORD_STONE = new ItemToolSword("tool.sword.stone", "minecraft:item/tool_sword_stone", 16400, ToolMaterial.stone)
+         .withTags(ItemTags.PREVENT_CREATIVE_MINING);
+      TOOL_SHOVEL_STONE = new ItemToolShovel("tool.shovel.stone", "minecraft:item/tool_shovel_tone", 16401, ToolMaterial.stone);
+      TOOL_PICKAXE_STONE = new ItemToolPickaxe("tool.pickaxe.stone", "minecraft:item/tool_pickaxe_stone", 16402, ToolMaterial.stone);
+      TOOL_AXE_STONE = new ItemToolAxe("tool.axe.stone", "minecraft:item/tool_axe_stone", 16403, ToolMaterial.stone);
+      TOOL_SWORD_DIAMOND = new ItemToolSword("tool.sword.diamond", "minecraft:item/tool_sword_diamond", 16404, ToolMaterial.diamond)
+         .withTags(ItemTags.PREVENT_CREATIVE_MINING);
+      TOOL_SHOVEL_DIAMOND = new ItemToolShovel("tool.shovel.diamond", "minecraft:item/tool_shovel_diamond", 16405, ToolMaterial.diamond);
+      TOOL_PICKAXE_DIAMOND = new ItemToolPickaxe("tool.pickaxe.diamond", "minecraft:item/tool_pickaxe_diamond", 16406, ToolMaterial.diamond);
+      TOOL_AXE_DIAMOND = new ItemToolAxe("tool.axe.diamond", "minecraft:item/tool_axe_diamond", 16407, ToolMaterial.diamond);
+      STICK = new Item("stick", "minecraft:item/stick", 16408);
+      BOWL = new Item("bowl", "minecraft:item/bowl", 16409);
+      FOOD_STEW_MUSHROOM = new ItemSoup("food.stew.mushroom", "minecraft:item/food_stew_mushroom", 16410, 10, 16);
+      TOOL_SWORD_GOLD = new ItemToolSword("tool.sword.gold", "minecraft:item/tool_sword_gold", 16411, ToolMaterial.gold)
+         .withTags(ItemTags.PREVENT_CREATIVE_MINING);
+      TOOL_SHOVEL_GOLD = new ItemToolShovel("tool.shovel.gold", "minecraft:item/tool_shovel_gold", 16412, ToolMaterial.gold);
+      TOOL_PICKAXE_GOLD = new ItemToolPickaxe("tool.pickaxe.gold", "minecraft:item/tool_pickaxe_gold", 16413, ToolMaterial.gold);
+      TOOL_AXE_GOLD = new ItemToolAxe("tool.axe.gold", "minecraft:item/tool_axe_gold", 16414, ToolMaterial.gold);
+      STRING = new Item("string", "minecraft:item/string", 16415);
+      FEATHER_CHICKEN = new Item("feather.chicken", "minecraft:item/feather_chicken", 16416);
+      SULPHUR = new Item("sulphur", "minecraft:item/sulphur", 16417);
+      TOOL_HOE_WOOD = new ItemToolHoe("tool.hoe.wood", "minecraft:item/tool_hoe_wood", 16418, ToolMaterial.wood);
+      TOOL_HOE_STONE = new ItemToolHoe("tool.hoe.stone", "minecraft:item/tool_hoe_stone", 16419, ToolMaterial.stone);
+      TOOL_HOE_IRON = new ItemToolHoe("tool.hoe.iron", "minecraft:item/tool_hoe_iron", 16420, ToolMaterial.iron);
+      TOOL_HOE_DIAMOND = new ItemToolHoe("tool.hoe.diamond", "minecraft:item/tool_hoe_diamond", 16421, ToolMaterial.diamond);
+      TOOL_HOE_GOLD = new ItemToolHoe("tool.hoe.gold", "minecraft:item/tool_hoe_gold", 16422, ToolMaterial.gold);
+      SEEDS_WHEAT = new ItemSeeds("seeds.wheat", "minecraft:item/seeds_wheat", 16423, Blocks.CROPS_WHEAT).withTags(ItemTags.CHICKENS_FAVOURITE_ITEM);
+      WHEAT = new Item("wheat", "minecraft:item/wheat", 16424).withTags(ItemTags.COWS_FAVOURITE_ITEM);
+      FOOD_BREAD = new ItemFood("food.bread", "minecraft:item/food_bread", 16425, 5, 12, false, 8);
+      ARMOR_HELMET_LEATHER = new ItemArmor("armor.helmet.leather", "minecraft:item/armor_helmet_leather", 16426, ArmorMaterial.LEATHER, 3);
+      ARMOR_CHESTPLATE_LEATHER = new ItemArmor("armor.chestplate.leather", "minecraft:item/armor_chestplate_leather", 16427, ArmorMaterial.LEATHER, 2);
+      ARMOR_LEGGINGS_LEATHER = new ItemArmor("armor.leggings.leather", "minecraft:item/armor_leggings_leather", 16428, ArmorMaterial.LEATHER, 1);
+      ARMOR_BOOTS_LEATHER = new ItemArmor("armor.boots.leather", "minecraft:item/armor_boots_leather", 16429, ArmorMaterial.LEATHER, 0);
+      ARMOR_HELMET_CHAINMAIL = new ItemArmor("armor.helmet.chainmail", "minecraft:item/armor_helmet_chainmail", 16430, ArmorMaterial.CHAINMAIL, 3);
+      ARMOR_CHESTPLATE_CHAINMAIL = new ItemArmor("armor.chestplate.chainmail", "minecraft:item/armor_chestplate_chainmail", 16431, ArmorMaterial.CHAINMAIL, 2);
+      ARMOR_LEGGINGS_CHAINMAIL = new ItemArmor("armor.leggings.chainmail", "minecraft:item/armor_leggings_chainmail", 16432, ArmorMaterial.CHAINMAIL, 1);
+      ARMOR_BOOTS_CHAINMAIL = new ItemArmor("armor.boots.chainmail", "minecraft:item/armor_boots_chainmail", 16433, ArmorMaterial.CHAINMAIL, 0);
+      ARMOR_HELMET_IRON = new ItemArmor("armor.helmet.iron", "minecraft:item/armor_helmet_iron", 16434, ArmorMaterial.IRON, 3);
+      ARMOR_CHESTPLATE_IRON = new ItemArmor("armor.chestplate.iron", "minecraft:item/armor_chestplate_iron", 16435, ArmorMaterial.IRON, 2);
+      ARMOR_LEGGINGS_IRON = new ItemArmor("armor.leggings.iron", "minecraft:item/armor_leggings_iron", 16436, ArmorMaterial.IRON, 1);
+      ARMOR_BOOTS_IRON = new ItemArmor("armor.boots.iron", "minecraft:item/armor_boots_iron", 16437, ArmorMaterial.IRON, 0);
+      ARMOR_HELMET_DIAMOND = new ItemArmor("armor.helmet.diamond", "minecraft:item/armor_helmet_diamond", 16438, ArmorMaterial.DIAMOND, 3);
+      ARMOR_CHESTPLATE_DIAMOND = new ItemArmor("armor.chestplate.diamond", "minecraft:item/armor_chestplate_diamond", 16439, ArmorMaterial.DIAMOND, 2);
+      ARMOR_LEGGINGS_DIAMOND = new ItemArmor("armor.leggings.diamond", "minecraft:item/armor_leggings_diamond", 16440, ArmorMaterial.DIAMOND, 1);
+      ARMOR_BOOTS_DIAMOND = new ItemArmor("armor.boots.diamond", "minecraft:item/armor_boots_diamond", 16441, ArmorMaterial.DIAMOND, 0);
+      ARMOR_HELMET_GOLD = new ItemArmor("armor.helmet.gold", "minecraft:item/armor_helmet_gold", 16442, ArmorMaterial.GOLD, 3);
+      ARMOR_CHESTPLATE_GOLD = new ItemArmor("armor.chestplate.gold", "minecraft:item/armor_chestplate_gold", 16443, ArmorMaterial.GOLD, 2);
+      ARMOR_LEGGINGS_GOLD = new ItemArmor("armor.leggings.gold", "minecraft:item/armor_leggings_gold", 16444, ArmorMaterial.GOLD, 1);
+      ARMOR_BOOTS_GOLD = new ItemArmor("armor.boots.gold", "minecraft:item/armor_boots_gold", 16445, ArmorMaterial.GOLD, 0);
+      FLINT = new Item("flint", "minecraft:item/flint", 16446);
+      FOOD_PORKCHOP_RAW = new ItemFood("food.porkchop.raw", "minecraft:item/food_porkchop_raw", 16447, 3, 16, true, 4);
+      FOOD_PORKCHOP_COOKED = new ItemFood("food.porkchop.cooked", "minecraft:item/food_porkchop_cooked", 16448, 8, 16, true, 4);
+      PAINTING = new ItemPainting("painting", "minecraft:item/painting", 16449);
+      FOOD_APPLE_GOLD = new ItemFood("food.apple.gold", "minecraft:item/food_apple_gold", 16450, 42, 0, false, 1);
+      SIGN = new ItemSign("sign", "minecraft:item/sign", 16451);
+      DOOR_OAK = new ItemDoor("door.oak", "minecraft:item/door_oak", 16452, Blocks.DOOR_PLANKS_OAK_BOTTOM, Blocks.DOOR_PLANKS_OAK_TOP);
+      BUCKET = new ItemBucketEmpty("bucket", "minecraft:item/bucket", 16453);
+      BUCKET_WATER = new ItemBucket("bucket.water", "minecraft:item/bucket_water", 16454, Blocks.FLUID_WATER_FLOWING).setContainerItem(BUCKET);
+      BUCKET_LAVA = new ItemBucket("bucket.lava", "minecraft:item/bucket_lava", 16455, Blocks.FLUID_LAVA_FLOWING).setContainerItem(BUCKET);
+      MINECART = new ItemMinecart("minecart", "minecraft:item/minecart", 16456, 0);
+      SADDLE = new ItemSaddle("saddle", "minecraft:item/saddle", 16457);
+      DOOR_IRON = new ItemDoor("door.iron", "minecraft:item/door_iron", 16458, Blocks.DOOR_IRON_BOTTOM, Blocks.DOOR_IRON_TOP);
+      DUST_REDSTONE = new ItemPlaceable("dust.redstone", "minecraft:item/dust_redstone", 16459, Blocks.WIRE_REDSTONE);
+      AMMO_SNOWBALL = new ItemSnowball("ammo.snowball", "minecraft:item/ammo_snowball", 16460);
+      BOAT = new ItemBoat("boat", "minecraft:item/boat", 16461);
+      LEATHER = new Item("leather", "minecraft:item/leather", 16462);
+      BUCKET_MILK = new ItemBucket("bucket.milk", "minecraft:item/bucket_milk", 16463, null).setContainerItem(BUCKET);
+      BRICK_CLAY = new Item("brick.clay", "minecraft:item/brick_clay", 16464);
+      CLAY = new Item("clay", "minecraft:item/clay", 16465);
+      SUGARCANE = new ItemPlaceable("sugarcane", "minecraft:item/sugarcane", 16466, Blocks.SUGARCANE);
+      PAPER = new Item("paper", "minecraft:item/paper", 16467);
+      BOOK = new Item("book", "minecraft:item/book", 16468);
+      SLIMEBALL = new Item("slimeball", "minecraft:item/slimeball", 16469);
+      MINECART_CHEST = new ItemMinecart("minecart.chest", "minecraft:item/minecart_chest", 16470, 1);
+      MINECART_FURNACE = new ItemMinecart("minecart.furnace", "minecraft:item/minecart_furnace", 16471, 2);
+      EGG_CHICKEN = new ItemEgg("egg.chicken", "minecraft:item/egg_chicken", 16472);
+      TOOL_COMPASS = new Item("tool.compass", "minecraft:item/tool_compass", 16473);
+      TOOL_FISHINGROD = new ItemFishingRod("tool.fishingrod", "minecraft:item/tool_fishingrod", 16474);
+      TOOL_CLOCK = new Item("tool.clock", "minecraft:item/tool_clock", 16475);
+      DUST_GLOWSTONE = new Item("dust.glowstone", "minecraft:item/dust_glowstone", 16476);
+      FOOD_FISH_RAW = new ItemFood("food.fish.raw", "minecraft:item/food_fish_raw", 16477, 2, 12, false, 8);
+      FOOD_FISH_COOKED = new ItemFood("food.fish.cooked", "minecraft:item/food_fish_cooked", 16478, 5, 12, false, 8);
+      DYE = new ItemDye("dye", "minecraft:item/dye", 16479);
+      BONE = new Item("bone", "minecraft:item/bone", 16480);
+      DUST_SUGAR = new Item("dust.sugar", "minecraft:item/dust_sugar", 16481);
+      FOOD_CAKE = new ItemPlaceable("food.cake", "minecraft:item/food_cake", 16482, Blocks.CAKE).setMaxStackSize(1);
+      BED = new ItemBed("bed", "minecraft:item/bed", 16483).setMaxStackSize(1);
+      REPEATER = new ItemPlaceable("repeater", "minecraft:item/repeater", 16484, Blocks.REPEATER_IDLE);
+      FOOD_COOKIE = new ItemFood("food.cookie", "minecraft:item/food_cookie", 16485, 1, 0, false, 16);
+      MAP = new ItemMap("map", "minecraft:item/map", 16486);
+      TOOL_SHEARS = new ItemToolShears("tool.shears", "minecraft:item/tool_shears", 16487, ToolMaterial.iron);
+      RECORD_13 = new ItemDiscMusic("record.13", "minecraft:item/record_13", 18384, "record.13", "C418");
+      RECORD_CAT = new ItemDiscMusic("record.cat", "minecraft:item/record_cat", 18385, "record.cat", "C418");
+      RECORD_BLOCKS = new ItemDiscMusic("record.blocks", "minecraft:item/record_blocks", 18386, "record.blocks", "C418");
+      RECORD_CHIRP = new ItemDiscMusic("record.chirp", "minecraft:item/record_chirp", 18387, "record.chirp", "C418");
+      RECORD_FAR = new ItemDiscMusic("record.far", "minecraft:item/record_far", 18388, "record.far", "C418");
+      RECORD_MALL = new ItemDiscMusic("record.mall", "minecraft:item/record_mall", 18389, "record.mall", "C418");
+      RECORD_MELLOHI = new ItemDiscMusic("record.mellohi", "minecraft:item/record_mellohi", 18390, "record.mellohi", "C418");
+      RECORD_STAL = new ItemDiscMusic("record.stal", "minecraft:item/record_stal", 18391, "record.stal", "C418");
+      RECORD_STRAD = new ItemDiscMusic("record.strad", "minecraft:item/record_strad", 18392, "record.strad", "C418");
+      RECORD_WARD = new ItemDiscMusic("record.ward", "minecraft:item/record_ward", 18393, "record.ward", "C418");
+      RECORD_WAIT = new ItemDiscMusic("record.wait", "minecraft:item/record_wait", 18394, "record.wait", "C418");
+      RECORD_DOG = new ItemDiscMusic("record.dog", "minecraft:item/record_dog", 18395, "record.dog", "C418");
+      NETHERCOAL = new Item("nethercoal", "minecraft:item/nethercoal", 16488);
+      ARMOR_HELMET_STEEL = new ItemArmor("armor.helmet.steel", "minecraft:item/armor_helmet_steel", 16489, ArmorMaterial.STEEL, 3);
+      ARMOR_CHESTPLATE_STEEL = new ItemArmor("armor.chestplate.steel", "minecraft:item/armor_chestplate_steel", 16490, ArmorMaterial.STEEL, 2);
+      ARMOR_LEGGINGS_STEEL = new ItemArmor("armor.leggings.steel", "minecraft:item/armor_leggings_steel", 16491, ArmorMaterial.STEEL, 1);
+      ARMOR_BOOTS_STEEL = new ItemArmor("armor.boots.steel", "minecraft:item/armor_boots_steel", 16492, ArmorMaterial.STEEL, 0);
+      TOOL_SWORD_STEEL = new ItemToolSword("tool.sword.steel", "minecraft:item/tool_sword_steel", 16493, ToolMaterial.steel)
+         .withTags(ItemTags.PREVENT_CREATIVE_MINING);
+      TOOL_SHOVEL_STEEL = new ItemToolShovel("tool.shovel.steel", "minecraft:item/tool_shovel_steel", 16494, ToolMaterial.steel);
+      TOOL_PICKAXE_STEEL = new ItemToolPickaxe("tool.pickaxe.steel", "minecraft:item/tool_pickaxe_steel", 16495, ToolMaterial.steel);
+      TOOL_AXE_STEEL = new ItemToolAxe("tool.axe.steel", "minecraft:item/tool_axe_steel", 16496, ToolMaterial.steel);
+      TOOL_HOE_STEEL = new ItemToolHoe("tool.hoe.steel", "minecraft:item/tool_hoe_steel", 16497, ToolMaterial.steel);
+      INGOT_STEEL = new Item("ingot.steel", "minecraft:item/ingot_steel", 16498);
+      INGOT_STEEL_CRUDE = new Item("ingot.steel.crude", "minecraft:item/ingot_steel_crude", 16499);
+      AMMO_FIREBALL = new Item("ammo.fireball", "minecraft:item/ammo_fireball", 16500).withTags(ItemTags.NOT_IN_CREATIVE_MENU);
+      ARMOR_QUIVER_GOLD = new ItemQuiverEndless("armor.quiver.gold", "minecraft:item/armor_quiver_gold", 16501);
+      HANDCANNON_UNLOADED = new ItemHandCannonUnloaded("handcannon.unloaded", "minecraft:item/handcannon_unloaded", 16502);
+      CHAINLINK = new Item("chainlink", "minecraft:item/chainlink", 16503);
+      CLOTH = new Item("cloth", "minecraft:item/cloth", 16504);
+      AMMO_CHARGE_EXPLOSIVE = new Item("ammo.charge.explosive", "minecraft:item/ammo_charge_explosive", 16505).setMaxStackSize(16);
+      HANDCANNON_LOADED = new ItemHandCannonLoaded("handcannon.loaded", "minecraft:item/handcannon_loaded", 16506).withTags(ItemTags.NOT_IN_CREATIVE_MENU);
+      AMMO_ARROW_GOLD = new Item("ammo.arrow.gold", "minecraft:item/ammo_arrow_gold", 16507);
+      ARMOR_QUIVER = new ItemQuiver("armor.quiver", "minecraft:item/armor_quiver", 16508);
+      TOOL_CALENDAR = new Item("tool.calendar", "minecraft:item/tool_calendar", 16509);
+      ORE_RAW_GOLD = new Item("ore.raw.gold", "minecraft:item/ore_raw_gold", 16510);
+      ORE_RAW_IRON = new Item("ore.raw.iron", "minecraft:item/ore_raw_iron", 16511);
+      QUARTZ = new Item("quartz", "minecraft:item/quartz", 16512);
+      OLIVINE = new Item("olivine", "minecraft:item/olivine", 16513);
+      AMMO_PEBBLE = new ItemPebble("ammo.pebble", "minecraft:item/ammo_pebble", 16514);
+      FOOD_CHERRY = new ItemFood("food.cherry", "minecraft:item/food_cherry", 16515, 2, 2, false, 2);
+      BUCKET_ICECREAM = new ItemBucketIceCream("bucket.icecream", "minecraft:item/bucket_icecream", 16516, 10, 4).setContainerItem(BUCKET);
+      AMMO_ARROW_PURPLE = new Item("ammo.arrow.purple", "minecraft:item/ammo_arrow_purple", 16517).withTags(ItemTags.NOT_IN_CREATIVE_MENU);
+      LABEL = new ItemLabel("label", "minecraft:item/label", 16518);
+      JAR = new ItemJar("jar", "minecraft:item/jar", 16519);
+      LANTERN_FIREFLY_GREEN = new ItemPlaceable("lantern.firefly.green", "minecraft:item/lantern_firefly_green", 16520, Blocks.LANTERN_FIREFLY_GREEN);
+      LANTERN_FIREFLY_BLUE = new ItemPlaceable("lantern.firefly.blue", "minecraft:item/lantern_firefly_blue", 16521, Blocks.LANTERN_FIREFLY_BLUE);
+      LANTERN_FIREFLY_ORANGE = new ItemPlaceable("lantern.firefly.orange", "minecraft:item/lantern_firefly_orange", 16522, Blocks.LANTERN_FIREFLY_ORANGE);
+      LANTERN_FIREFLY_RED = new ItemPlaceable("lantern.firefly.red", "minecraft:item/lantern_firefly_red", 16523, Blocks.LANTERN_FIREFLY_RED);
+      BASKET = new ItemPlaceable("basket", "minecraft:item/basket", 16525, Blocks.BASKET);
+      FLAG = new ItemFlag("flag", "minecraft:item/flag", 16526);
+      ARMOR_BOOTS_ICESKATES = new ItemIceSkates("armor.boots.iceskates", "minecraft:item/armor_boots_iceskates", 16527);
+      TOOL_SHEARS_STEEL = (ItemToolShears)new ItemToolShears("tool.shears.steel", "minecraft:item/tool_shears_steel", 16528, ToolMaterial.steel)
+         .setMaxDamage(ToolMaterial.steel.getDurability());
+      TOOL_FIRESTRIKER_STEEL = new ItemFireStriker("tool.firestriker.steel", "minecraft:item/tool_firestriker_steel", 16529)
+         .setMaxDamage(ToolMaterial.steel.getDurability());
+      SEEDS_PUMPKIN = new ItemSeeds("seeds.pumpkin", "minecraft:item/seeds_pumpkin", 16530, Blocks.CROPS_PUMPKIN).withTags(ItemTags.CHICKENS_FAVOURITE_ITEM);
+      SEAT = new ItemPlaceable("seat", "minecraft:item/seat", 16531, Blocks.SEAT).setMaxStackSize(64);
+      DOOR_OAK_PAINTED = new ItemDoorPainted(
+         "door.oak.painted", "minecraft:item/door_oak_painted", 16532, Blocks.DOOR_PLANKS_PAINTED_BOTTOM, Blocks.DOOR_PLANKS_PAINTED_TOP
+      );
+      DOOR_GLASS = new ItemDoor("door.glass", "minecraft:item/door_glass", 16533, Blocks.DOOR_GLASS_BOTTOM, Blocks.DOOR_GLASS_TOP);
+      ROPE = new ItemRope("rope", "minecraft:item/rope", 16534, Blocks.ROPE);
+      FOOD_PUMPKIN_PIE = new ItemPlaceable("food.pumpkin_pie", "minecraft:item/food_pumpkin_pie", 16535, Blocks.PUMPKIN_PIE).setMaxStackSize(1);
+      WAND_MONSTER_SPAWNER = new ItemWandSpawner("wand.monster", "minecraft:item/wand_monster", 16536).setMaxStackSize(1);
+      DOOR_STEEL = new ItemDoor("door.steel", "minecraft:item/door_steel", 16537, Blocks.DOOR_STEEL_BOTTOM, Blocks.DOOR_STEEL_TOP);
+      PAINTBRUSH = new ItemPaintBrush("paintbrush", "minecraft:item/paintbrush", 16538);
+      SIGN_PAINTED = new ItemSignPainted("sign.painted", "minecraft:item/sign_painted", 16549);
+   }
+}

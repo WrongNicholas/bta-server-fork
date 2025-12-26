@@ -1,0 +1,573 @@
+[
+  {
+    "name": "minecraft:trommel/clay",
+    "type": "minecraft:trommeling",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/block_clay"
+      }
+    },
+    "outputs": [
+      {
+        "weight": 30.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 4,
+            "max": 8
+          },
+          "stack": {
+            "id": "minecraft:item/clay"
+          }
+        }
+      },
+      {
+        "weight": 20.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 3
+          },
+          "stack": {
+            "id": "minecraft:item/ammo_pebble"
+          }
+        }
+      },
+      {
+        "weight": 10.0,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/sulphur"
+          }
+        }
+      },
+      {
+        "weight": 1.0,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/ore_raw_gold"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "minecraft:trommel/dirt",
+    "type": "minecraft:trommeling",
+    "input": {
+      "group": "minecraft:trommel_dirt"
+    },
+    "outputs": [
+      {
+        "weight": 50.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 3
+          },
+          "stack": {
+            "id": "minecraft:item/ammo_pebble"
+          }
+        }
+      },
+      {
+        "weight": 20.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 5
+          },
+          "stack": {
+            "id": "minecraft:item/clay"
+          }
+        }
+      },
+      {
+        "weight": 10.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 3
+          },
+          "stack": {
+            "id": "minecraft:item/flint"
+          }
+        }
+      },
+      {
+        "weight": 2.0,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/sulphur"
+          }
+        }
+      },
+      {
+        "weight": 0.5,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/ore_raw_iron"
+          }
+        }
+      },
+      {
+        "weight": 0.25,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/olivine"
+          }
+        }
+      },
+      {
+        "weight": 0.25,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/quartz"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "minecraft:trommel/gravel",
+    "type": "minecraft:trommeling",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/gravel"
+      }
+    },
+    "outputs": [
+      {
+        "weight": 25.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 2
+          },
+          "stack": {
+            "id": "minecraft:item/flint"
+          }
+        }
+      },
+      {
+        "weight": 30.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 3
+          },
+          "stack": {
+            "id": "minecraft:item/olivine"
+          }
+        }
+      },
+      {
+        "weight": 25.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 6
+          },
+          "stack": {
+            "id": "minecraft:item/ammo_pebble"
+          }
+        }
+      },
+      {
+        "weight": 10.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 2
+          },
+          "stack": {
+            "id": "minecraft:item/ore_raw_iron"
+          }
+        }
+      },
+      {
+        "weight": 5.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 2,
+            "max": 6
+          },
+          "stack": {
+            "id": "minecraft:item/dye",
+            "meta": 4
+          }
+        }
+      },
+      {
+        "weight": 5.0,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/sulphur"
+          }
+        }
+      },
+      {
+        "weight": 0.5,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/quartz"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "minecraft:trommel/rich_dirt",
+    "type": "minecraft:trommeling",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/dirt_scorched_rich"
+      }
+    },
+    "outputs": [
+      {
+        "weight": 10.0,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/ore_raw_gold"
+          }
+        }
+      },
+      {
+        "weight": 15.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 2
+          },
+          "stack": {
+            "id": "minecraft:item/ore_raw_iron"
+          }
+        }
+      },
+      {
+        "weight": 25.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 4
+          },
+          "stack": {
+            "id": "minecraft:item/quartz"
+          }
+        }
+      },
+      {
+        "weight": 25.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 4
+          },
+          "stack": {
+            "id": "minecraft:item/olivine"
+          }
+        }
+      },
+      {
+        "weight": 20.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 2,
+            "max": 4
+          },
+          "stack": {
+            "id": "minecraft:item/dye",
+            "meta": 4
+          }
+        }
+      },
+      {
+        "weight": 10.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 4,
+            "max": 8
+          },
+          "stack": {
+            "id": "minecraft:item/clay"
+          }
+        }
+      },
+      {
+        "weight": 5.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 5
+          },
+          "stack": {
+            "id": "minecraft:item/ammo_pebble"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "minecraft:trommel/sand",
+    "type": "minecraft:trommeling",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/sand"
+      }
+    },
+    "outputs": [
+      {
+        "weight": 50.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 3
+          },
+          "stack": {
+            "id": "minecraft:item/quartz"
+          }
+        }
+      },
+      {
+        "weight": 30.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 4,
+            "max": 8
+          },
+          "stack": {
+            "id": "minecraft:item/clay"
+          }
+        }
+      },
+      {
+        "weight": 25.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 5
+          },
+          "stack": {
+            "id": "minecraft:item/ammo_pebble"
+          }
+        }
+      },
+      {
+        "weight": 10.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 3
+          },
+          "stack": {
+            "id": "minecraft:item/bone"
+          }
+        }
+      },
+      {
+        "weight": 10.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 3
+          },
+          "stack": {
+            "id": "minecraft:item/flint"
+          }
+        }
+      },
+      {
+        "weight": 5.0,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/sulphur"
+          }
+        }
+      },
+      {
+        "weight": 5.0,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/olivine"
+          }
+        }
+      },
+      {
+        "weight": 1.0,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/ore_raw_gold"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "minecraft:trommel/soul_sand",
+    "type": "minecraft:trommeling",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/soulsand"
+      }
+    },
+    "outputs": [
+      {
+        "weight": 20.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 3
+          },
+          "stack": {
+            "id": "minecraft:item/flint"
+          }
+        }
+      },
+      {
+        "weight": 10.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 6
+          },
+          "stack": {
+            "id": "minecraft:item/bone"
+          }
+        }
+      },
+      {
+        "weight": 2.0,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/ore_raw_gold"
+          }
+        }
+      },
+      {
+        "weight": 1.0,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/ore_raw_iron"
+          }
+        }
+      },
+      {
+        "weight": 5.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 6
+          },
+          "stack": {
+            "id": "minecraft:item/dust_glowstone"
+          }
+        }
+      },
+      {
+        "weight": 5.0,
+        "loot": {
+          "random": true,
+          "yield": {
+            "min": 1,
+            "max": 3
+          },
+          "stack": {
+            "id": "minecraft:item/quartz"
+          }
+        }
+      },
+      {
+        "weight": 0.5,
+        "loot": {
+          "random": false,
+          "yield": {
+            "fixed": 1
+          },
+          "stack": {
+            "id": "minecraft:item/nethercoal"
+          }
+        }
+      }
+    ]
+  }
+]

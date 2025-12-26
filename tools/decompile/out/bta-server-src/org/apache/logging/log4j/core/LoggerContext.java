@@ -1,0 +1,510 @@
+package org.apache.logging.log4j.core;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.net.URI;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.ConfigurationFactory;
+import org.apache.logging.log4j.core.config.ConfigurationListener;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.DefaultConfiguration;
+import org.apache.logging.log4j.core.config.NullConfiguration;
+import org.apache.logging.log4j.core.config.Reconfigurable;
+import org.apache.logging.log4j.core.impl.Log4jLogEvent;
+import org.apache.logging.log4j.core.jmx.Server;
+import org.apache.logging.log4j.core.util.Cancellable;
+import org.apache.logging.log4j.core.util.ExecutorServices;
+import org.apache.logging.log4j.core.util.NetUtils;
+import org.apache.logging.log4j.core.util.ShutdownCallbackRegistry;
+import org.apache.logging.log4j.message.MessageFactory;
+import org.apache.logging.log4j.spi.AbstractLogger;
+import org.apache.logging.log4j.spi.LoggerContextFactory;
+import org.apache.logging.log4j.spi.LoggerContextShutdownAware;
+import org.apache.logging.log4j.spi.LoggerContextShutdownEnabled;
+import org.apache.logging.log4j.spi.LoggerRegistry;
+import org.apache.logging.log4j.spi.Terminable;
+import org.apache.logging.log4j.spi.ThreadContextMapFactory;
+import org.apache.logging.log4j.util.PropertiesUtil;
+
+public class LoggerContext
+   extends AbstractLifeCycle
+   implements org.apache.logging.log4j.spi.LoggerContext,
+   AutoCloseable,
+   Terminable,
+   ConfigurationListener,
+   LoggerContextShutdownEnabled {
+   public static final String PROPERTY_CONFIG = "config";
+   private static final Configuration NULL_CONFIGURATION = new NullConfiguration();
+   private final LoggerRegistry<Logger> loggerRegistry = new LoggerRegistry<>();
+   private final CopyOnWriteArrayList<PropertyChangeListener> propertyChangeListeners = new CopyOnWriteArrayList<>();
+   private volatile List<LoggerContextShutdownAware> listeners;
+   private volatile Configuration configuration = new DefaultConfiguration();
+   private static final String EXTERNAL_CONTEXT_KEY = "__EXTERNAL_CONTEXT_KEY__";
+   private ConcurrentMap<String, Object> externalMap = new ConcurrentHashMap<>();
+   private String contextName;
+   private volatile URI configLocation;
+   private Cancellable shutdownCallback;
+   private final Lock configLock = new ReentrantLock();
+
+   public LoggerContext(final String name) {
+      this(name, null, (URI)null);
+   }
+
+   public LoggerContext(final String name, final Object externalContext) {
+      this(name, externalContext, (URI)null);
+   }
+
+   public LoggerContext(final String name, final Object externalContext, final URI configLocn) {
+      this.contextName = name;
+      if (externalContext == null) {
+         this.externalMap.remove("__EXTERNAL_CONTEXT_KEY__");
+      } else {
+         this.externalMap.put("__EXTERNAL_CONTEXT_KEY__", externalContext);
+      }
+
+      this.configLocation = configLocn;
+   }
+
+   public LoggerContext(final String name, final Object externalContext, final String configLocn) {
+      this.contextName = name;
+      if (externalContext == null) {
+         this.externalMap.remove("__EXTERNAL_CONTEXT_KEY__");
+      } else {
+         this.externalMap.put("__EXTERNAL_CONTEXT_KEY__", externalContext);
+      }
+
+      if (configLocn != null) {
+         URI uri;
+         try {
+            uri = new File(configLocn).toURI();
+         } catch (Exception var6) {
+            uri = null;
+         }
+
+         this.configLocation = uri;
+      } else {
+         this.configLocation = null;
+      }
+   }
+
+   @Override
+   public void addShutdownListener(LoggerContextShutdownAware listener) {
+      if (this.listeners == null) {
+         synchronized (this) {
+            if (this.listeners == null) {
+               this.listeners = new CopyOnWriteArrayList<>();
+            }
+         }
+      }
+
+      this.listeners.add(listener);
+   }
+
+   @Override
+   public List<LoggerContextShutdownAware> getListeners() {
+      return this.listeners;
+   }
+
+   public static LoggerContext getContext() {
+      return (LoggerContext)LogManager.getContext();
+   }
+
+   public static LoggerContext getContext(final boolean currentContext) {
+      return (LoggerContext)LogManager.getContext(currentContext);
+   }
+
+   public static LoggerContext getContext(final ClassLoader loader, final boolean currentContext, final URI configLocation) {
+      return (LoggerContext)LogManager.getContext(loader, currentContext, configLocation);
+   }
+
+   @Override
+   public void start() {
+      LOGGER.debug("Starting LoggerContext[name={}, {}]...", this.getName(), this);
+      if (PropertiesUtil.getProperties().getBooleanProperty("log4j.LoggerContext.stacktrace.on.start", false)) {
+         LOGGER.debug("Stack trace to locate invoker", (Throwable)(new Exception("Not a real error, showing stack trace to locate invoker")));
+      }
+
+      if (this.configLock.tryLock()) {
+         try {
+            if (this.isInitialized() || this.isStopped()) {
+               this.setStarting();
+               this.reconfigure();
+               if (this.configuration.isShutdownHookEnabled()) {
+                  this.setUpShutdownHook();
+               }
+
+               this.setStarted();
+            }
+         } finally {
+            this.configLock.unlock();
+         }
+      }
+
+      LOGGER.debug("LoggerContext[name={}, {}] started OK.", this.getName(), this);
+   }
+
+   public void start(final Configuration config) {
+      LOGGER.debug("Starting LoggerContext[name={}, {}] with configuration {}...", this.getName(), this, config);
+      if (this.configLock.tryLock()) {
+         try {
+            if (this.isInitialized() || this.isStopped()) {
+               if (this.configuration.isShutdownHookEnabled()) {
+                  this.setUpShutdownHook();
+               }
+
+               this.setStarted();
+            }
+         } finally {
+            this.configLock.unlock();
+         }
+      }
+
+      this.setConfiguration(config);
+      LOGGER.debug("LoggerContext[name={}, {}] started OK with configuration {}.", this.getName(), this, config);
+   }
+
+   private void setUpShutdownHook() {
+      if (this.shutdownCallback == null) {
+         LoggerContextFactory factory = LogManager.getFactory();
+         if (factory instanceof ShutdownCallbackRegistry) {
+            LOGGER.debug(ShutdownCallbackRegistry.SHUTDOWN_HOOK_MARKER, "Shutdown hook enabled. Registering a new one.");
+            ExecutorServices.ensureInitialized();
+
+            try {
+               final long shutdownTimeoutMillis = this.configuration.getShutdownTimeoutMillis();
+               this.shutdownCallback = ((ShutdownCallbackRegistry)factory)
+                  .addShutdownCallback(
+                     new Runnable() {
+                        @Override
+                        public void run() {
+                           LoggerContext context = LoggerContext.this;
+                           AbstractLifeCycle.LOGGER
+                              .debug(ShutdownCallbackRegistry.SHUTDOWN_HOOK_MARKER, "Stopping LoggerContext[name={}, {}]", context.getName(), context);
+                           context.stop(shutdownTimeoutMillis, TimeUnit.MILLISECONDS);
+                        }
+
+                        @Override
+                        public String toString() {
+                           return "Shutdown callback for LoggerContext[name=" + LoggerContext.this.getName() + ']';
+                        }
+                     }
+                  );
+            } catch (IllegalStateException var4) {
+               throw new IllegalStateException("Unable to register Log4j shutdown hook because JVM is shutting down.", var4);
+            } catch (SecurityException var5) {
+               LOGGER.error(ShutdownCallbackRegistry.SHUTDOWN_HOOK_MARKER, "Unable to register shutdown hook due to security restrictions", (Throwable)var5);
+            }
+         }
+      }
+   }
+
+   @Override
+   public void close() {
+      this.stop();
+   }
+
+   @Override
+   public void terminate() {
+      this.stop();
+   }
+
+   @Override
+   public boolean stop(final long timeout, final TimeUnit timeUnit) {
+      LOGGER.debug("Stopping LoggerContext[name={}, {}]...", this.getName(), this);
+      this.configLock.lock();
+
+      try {
+         if (this.isStopped()) {
+            return true;
+         }
+
+         this.setStopping();
+
+         try {
+            Server.unregisterLoggerContext(this.getName());
+         } catch (Exception | LinkageError var11) {
+            LOGGER.error("Unable to unregister MBeans", (Throwable)var11);
+         }
+
+         if (this.shutdownCallback != null) {
+            this.shutdownCallback.cancel();
+            this.shutdownCallback = null;
+         }
+
+         Configuration prev = this.configuration;
+         this.configuration = NULL_CONFIGURATION;
+         this.updateLoggers();
+         if (prev instanceof LifeCycle2) {
+            ((LifeCycle2)prev).stop(timeout, timeUnit);
+         } else {
+            prev.stop();
+         }
+
+         this.externalMap.clear();
+         LogManager.getFactory().removeContext(this);
+      } finally {
+         this.configLock.unlock();
+         this.setStopped();
+      }
+
+      if (this.listeners != null) {
+         for (LoggerContextShutdownAware listener : this.listeners) {
+            try {
+               listener.contextShutdown(this);
+            } catch (Exception var10) {
+            }
+         }
+      }
+
+      LOGGER.debug("Stopped LoggerContext[name={}, {}] with status {}", this.getName(), this, true);
+      return true;
+   }
+
+   public String getName() {
+      return this.contextName;
+   }
+
+   public Logger getRootLogger() {
+      return this.getLogger("");
+   }
+
+   public void setName(final String name) {
+      this.contextName = Objects.requireNonNull(name);
+   }
+
+   @Override
+   public Object getObject(String key) {
+      return this.externalMap.get(key);
+   }
+
+   @Override
+   public Object putObject(String key, Object value) {
+      return this.externalMap.put(key, value);
+   }
+
+   @Override
+   public Object putObjectIfAbsent(String key, Object value) {
+      return this.externalMap.putIfAbsent(key, value);
+   }
+
+   @Override
+   public Object removeObject(String key) {
+      return this.externalMap.remove(key);
+   }
+
+   @Override
+   public boolean removeObject(String key, Object value) {
+      return this.externalMap.remove(key, value);
+   }
+
+   public void setExternalContext(final Object context) {
+      if (context != null) {
+         this.externalMap.put("__EXTERNAL_CONTEXT_KEY__", context);
+      } else {
+         this.externalMap.remove("__EXTERNAL_CONTEXT_KEY__");
+      }
+   }
+
+   @Override
+   public Object getExternalContext() {
+      return this.externalMap.get("__EXTERNAL_CONTEXT_KEY__");
+   }
+
+   public Logger getLogger(final String name) {
+      return this.getLogger(name, null);
+   }
+
+   public Collection<Logger> getLoggers() {
+      return this.loggerRegistry.getLoggers();
+   }
+
+   public Logger getLogger(final String name, final MessageFactory messageFactory) {
+      Logger logger = this.loggerRegistry.getLogger(name, messageFactory);
+      if (logger != null) {
+         AbstractLogger.checkMessageFactory(logger, messageFactory);
+         return logger;
+      } else {
+         logger = this.newInstance(this, name, messageFactory);
+         this.loggerRegistry.putIfAbsent(name, messageFactory, logger);
+         return this.loggerRegistry.getLogger(name, messageFactory);
+      }
+   }
+
+   @Override
+   public LoggerRegistry<Logger> getLoggerRegistry() {
+      return this.loggerRegistry;
+   }
+
+   @Override
+   public boolean hasLogger(final String name) {
+      return this.loggerRegistry.hasLogger(name);
+   }
+
+   @Override
+   public boolean hasLogger(final String name, final MessageFactory messageFactory) {
+      return this.loggerRegistry.hasLogger(name, messageFactory);
+   }
+
+   @Override
+   public boolean hasLogger(final String name, final Class<? extends MessageFactory> messageFactoryClass) {
+      return this.loggerRegistry.hasLogger(name, messageFactoryClass);
+   }
+
+   public Configuration getConfiguration() {
+      return this.configuration;
+   }
+
+   public void addFilter(final Filter filter) {
+      this.configuration.addFilter(filter);
+   }
+
+   public void removeFilter(final Filter filter) {
+      this.configuration.removeFilter(filter);
+   }
+
+   public Configuration setConfiguration(final Configuration config) {
+      if (config == null) {
+         LOGGER.error("No configuration found for context '{}'.", this.contextName);
+         return this.configuration;
+      } else {
+         this.configLock.lock();
+
+         Configuration e;
+         try {
+            Configuration prev = this.configuration;
+            config.addListener(this);
+            ConcurrentMap<String, String> map = config.getComponent("ContextProperties");
+
+            try {
+               map.computeIfAbsent("hostName", s -> NetUtils.getLocalHostname());
+            } catch (Exception var10) {
+               LOGGER.debug("Ignoring {}, setting hostName to 'unknown'", var10.toString());
+               map.putIfAbsent("hostName", "unknown");
+            }
+
+            map.putIfAbsent("contextName", this.contextName);
+            config.start();
+            this.configuration = config;
+            this.updateLoggers();
+            if (prev != null) {
+               prev.removeListener(this);
+               prev.stop();
+            }
+
+            this.firePropertyChangeEvent(new PropertyChangeEvent(this, "config", prev, config));
+
+            try {
+               Server.reregisterMBeansAfterReconfigure();
+            } catch (Exception | LinkageError var9) {
+               LOGGER.error("Could not reconfigure JMX", (Throwable)var9);
+            }
+
+            Log4jLogEvent.setNanoClock(this.configuration.getNanoClock());
+            e = prev;
+         } finally {
+            this.configLock.unlock();
+         }
+
+         return e;
+      }
+   }
+
+   private void firePropertyChangeEvent(final PropertyChangeEvent event) {
+      for (PropertyChangeListener listener : this.propertyChangeListeners) {
+         listener.propertyChange(event);
+      }
+   }
+
+   public void addPropertyChangeListener(final PropertyChangeListener listener) {
+      this.propertyChangeListeners.add(Objects.requireNonNull(listener, "listener"));
+   }
+
+   public void removePropertyChangeListener(final PropertyChangeListener listener) {
+      this.propertyChangeListeners.remove(listener);
+   }
+
+   public URI getConfigLocation() {
+      return this.configLocation;
+   }
+
+   public void setConfigLocation(final URI configLocation) {
+      this.configLocation = configLocation;
+      this.reconfigure(configLocation);
+   }
+
+   private void reconfigure(final URI configURI) {
+      Object externalContext = this.externalMap.get("__EXTERNAL_CONTEXT_KEY__");
+      ClassLoader cl = ClassLoader.class.isInstance(externalContext) ? (ClassLoader)externalContext : null;
+      LOGGER.debug("Reconfiguration started for context[name={}] at URI {} ({}) with optional ClassLoader: {}", this.contextName, configURI, this, cl);
+      Configuration instance = ConfigurationFactory.getInstance().getConfiguration(this, this.contextName, configURI, cl);
+      if (instance == null) {
+         LOGGER.error("Reconfiguration failed: No configuration found for '{}' at '{}' in '{}'", this.contextName, configURI, cl);
+      } else {
+         this.setConfiguration(instance);
+         String location = this.configuration == null ? "?" : String.valueOf(this.configuration.getConfigurationSource());
+         LOGGER.debug("Reconfiguration complete for context[name={}] at URI {} ({}) with optional ClassLoader: {}", this.contextName, location, this, cl);
+      }
+   }
+
+   public void reconfigure() {
+      this.reconfigure(this.configLocation);
+   }
+
+   public void reconfigure(Configuration configuration) {
+      this.setConfiguration(configuration);
+      ConfigurationSource source = configuration.getConfigurationSource();
+      if (source != null) {
+         URI uri = source.getURI();
+         if (uri != null) {
+            this.configLocation = uri;
+         }
+      }
+   }
+
+   public void updateLoggers() {
+      this.updateLoggers(this.configuration);
+   }
+
+   public void updateLoggers(final Configuration config) {
+      Configuration old = this.configuration;
+
+      for (Logger logger : this.loggerRegistry.getLoggers()) {
+         logger.updateConfiguration(config);
+      }
+
+      this.firePropertyChangeEvent(new PropertyChangeEvent(this, "config", old, config));
+   }
+
+   @Override
+   public synchronized void onChange(final Reconfigurable reconfigurable) {
+      long startMillis = System.currentTimeMillis();
+      LOGGER.debug("Reconfiguration started for context {} ({})", this.contextName, this);
+      this.initApiModule();
+      Configuration newConfig = reconfigurable.reconfigure();
+      if (newConfig != null) {
+         this.setConfiguration(newConfig);
+         LOGGER.debug("Reconfiguration completed for {} ({}) in {} milliseconds.", this.contextName, this, System.currentTimeMillis() - startMillis);
+      } else {
+         LOGGER.debug("Reconfiguration failed for {} ({}) in {} milliseconds.", this.contextName, this, System.currentTimeMillis() - startMillis);
+      }
+   }
+
+   private void initApiModule() {
+      ThreadContextMapFactory.init();
+   }
+
+   protected Logger newInstance(final LoggerContext ctx, final String name, final MessageFactory messageFactory) {
+      return new Logger(ctx, name, messageFactory);
+   }
+}

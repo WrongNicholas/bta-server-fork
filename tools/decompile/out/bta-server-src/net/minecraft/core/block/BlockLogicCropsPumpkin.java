@@ -1,0 +1,130 @@
+package net.minecraft.core.block;
+
+import java.util.Random;
+import net.minecraft.core.block.entity.TileEntity;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.enums.EnumDropCause;
+import net.minecraft.core.item.IBonemealable;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.item.Items;
+import net.minecraft.core.util.helper.Side;
+import net.minecraft.core.util.phys.AABB;
+import net.minecraft.core.world.World;
+import net.minecraft.core.world.WorldSource;
+import org.jetbrains.annotations.Nullable;
+
+public class BlockLogicCropsPumpkin extends BlockLogicFlower implements IBonemealable {
+   public BlockLogicCropsPumpkin(Block<?> block) {
+      super(block);
+   }
+
+   @Override
+   public AABB getBlockBoundsFromState(WorldSource world, int x, int y, int z) {
+      int meta = world.getBlockMetadata(x, y, z);
+      float onePix = 0.0625F;
+      float size = 0.0F;
+      if (meta == 0) {
+         size = 6.0F * onePix;
+      } else if (meta == 1) {
+         size = 8.0F * onePix;
+      } else if (meta == 2) {
+         size = 10.0F * onePix;
+      } else if (meta == 3) {
+         size = 12.0F * onePix;
+      } else if (meta == 4) {
+         size = 14.0F * onePix;
+      }
+
+      return AABB.getTemporaryBB(0.5F - size / 2.0F, 0.0, 0.5F - size / 2.0F, 0.5F + size / 2.0F, size, 0.5F + size / 2.0F);
+   }
+
+   @Override
+   protected boolean mayPlaceOn(int blockId) {
+      return blockId == Blocks.FARMLAND_DIRT.id();
+   }
+
+   @Override
+   public void updateTick(World world, int x, int y, int z, Random rand) {
+      super.updateTick(world, x, y, z, rand);
+      if (world.getBlockLightValue(x, y + 1, z) >= 9) {
+         int meta = world.getBlockMetadata(x, y, z);
+         if (meta < 6) {
+            float f = this.getGrowthRate(world, x, y, z);
+            if (rand.nextInt((int)(100.0F / f)) == 0) {
+               if (++meta == 5) {
+                  world.setBlockAndMetadataWithNotify(x, y, z, Blocks.PUMPKIN.id(), 0);
+               } else {
+                  world.setBlockMetadataWithNotify(x, y, z, meta);
+               }
+            }
+         }
+      }
+   }
+
+   public void fertilize(World world, int x, int y, int z) {
+      world.setBlockWithNotify(x, y, z, Blocks.PUMPKIN.id());
+   }
+
+   private float getGrowthRate(World world, int x, int y, int z) {
+      float growthRate = 1.0F;
+
+      for (int dx = x - 1; dx <= x + 1; dx++) {
+         for (int dz = z - 1; dz <= z + 1; dz++) {
+            int id = world.getBlockId(dx, y - 1, dz);
+            float growthRateMod = 0.0F;
+            if (id == Blocks.FARMLAND_DIRT.id()) {
+               growthRateMod = 1.0F;
+               if (world.getBlockMetadata(dx, y - 1, dz) > 0) {
+                  growthRateMod = 3.0F;
+               }
+            }
+
+            if (dx != x || dz != z) {
+               growthRateMod /= 4.0F;
+            }
+
+            growthRate += growthRateMod;
+         }
+      }
+
+      boolean isFertilized = BlockLogicFarmland.isFertilized(world.getBlockMetadata(x, y - 1, z));
+      if (!isFertilized) {
+         if (world.getSeasonManager().getCurrentSeason() != null) {
+            growthRate *= world.getSeasonManager().getCurrentSeason().cropGrowthFactor;
+         }
+      } else {
+         growthRate *= 1.5F;
+      }
+
+      return growthRate;
+   }
+
+   @Override
+   public ItemStack[] getBreakResult(World world, EnumDropCause dropCause, int meta, TileEntity tileEntity) {
+      return new ItemStack[]{new ItemStack(Items.SEEDS_PUMPKIN, 1)};
+   }
+
+   @Override
+   public AABB getCollisionBoundingBoxFromPool(WorldSource world, int x, int y, int z) {
+      int meta = world.getBlockMetadata(x, y, z);
+      return meta == 0 ? null : this.getBlockBoundsFromState(world, x, y, z).move(x, y, z);
+   }
+
+   @Override
+   public boolean onBonemealUsed(
+      ItemStack itemstack, @Nullable Player player, World world, int blockX, int blockY, int blockZ, Side side, double xPlaced, double yPlaced
+   ) {
+      if (world.getBlockMetadata(blockX, blockY, blockZ) >= 5) {
+         return false;
+      } else {
+         if (!world.isClientSide) {
+            this.fertilize(world, blockX, blockY, blockZ);
+            if (player == null || player.getGamemode().consumeBlocks()) {
+               itemstack.stackSize--;
+            }
+         }
+
+         return true;
+      }
+   }
+}

@@ -1,0 +1,124 @@
+package net.minecraft.core.item;
+
+import java.util.Random;
+import net.minecraft.core.block.Block;
+import net.minecraft.core.block.Blocks;
+import net.minecraft.core.block.entity.TileEntityActivator;
+import net.minecraft.core.block.tag.BlockTags;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.enums.EnumDropCause;
+import net.minecraft.core.sound.SoundCategory;
+import net.minecraft.core.util.helper.Direction;
+import net.minecraft.core.util.helper.Side;
+import net.minecraft.core.util.phys.HitResult;
+import net.minecraft.core.world.Dimension;
+import net.minecraft.core.world.World;
+import org.jetbrains.annotations.Nullable;
+
+public class ItemBucket extends Item {
+   @Nullable
+   private final Block<?> blockToPlace;
+
+   public ItemBucket(String name, String namespaceId, int id, @Nullable Block<?> blockToPlace) {
+      super(name, namespaceId, id);
+      this.maxStackSize = 1;
+      this.blockToPlace = blockToPlace;
+   }
+
+   @Override
+   public ItemStack onUseItem(ItemStack stack, World world, Player player) {
+      if (this.blockToPlace == null) {
+         return new ItemStack(Items.BUCKET);
+      } else {
+         double reachDistance = player.getGamemode().getBlockReachDistance();
+         HitResult rayTraceResult = player.rayTrace(reachDistance, 1.0F, false, false);
+         if (rayTraceResult != null && rayTraceResult.hitType == HitResult.HitType.TILE) {
+            int x = rayTraceResult.x;
+            int y = rayTraceResult.y;
+            int z = rayTraceResult.z;
+            if (!world.canMineBlock(player, x, y, z)) {
+               return stack;
+            } else {
+               Block<?> block = world.getBlock(x, y, z);
+               if (block != null && !block.hasTag(BlockTags.PLACE_OVERWRITES) && !block.hasTag(BlockTags.BROKEN_BY_FLUIDS)) {
+                  Side side = rayTraceResult.side;
+                  x += side.getOffsetX();
+                  y += side.getOffsetY();
+                  z += side.getOffsetZ();
+               }
+
+               if (y >= 0 && y < world.getHeightBlocks()) {
+                  if (world.isAirBlock(x, y, z) || !world.getBlockMaterial(x, y, z).isSolid()) {
+                     if (world.dimension == Dimension.NETHER && this.blockToPlace == Blocks.FLUID_WATER_FLOWING) {
+                        world.playSoundEffect(
+                           player,
+                           SoundCategory.WORLD_SOUNDS,
+                           z + 0.5,
+                           y + 0.5,
+                           x + 0.5,
+                           "random.fizz",
+                           0.5F,
+                           2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F
+                        );
+
+                        for (int l = 0; l < 8; l++) {
+                           world.spawnParticle("largesmoke", x + Math.random(), y + Math.random(), z + Math.random(), 0.0, 0.0, 0.0, 0);
+                        }
+                     } else {
+                        if (this.blockToPlace == Blocks.FLUID_WATER_FLOWING) {
+                           world.playSoundEffect(player, SoundCategory.WORLD_SOUNDS, x + 0.5F, y + 0.5F, z + 0.5F, "liquid.splash", 0.5F, 1.0F);
+                        }
+
+                        player.swingItem();
+                        Block<?> block1 = world.getBlock(x, y, z);
+                        if (block1 != null) {
+                           block1.dropBlockWithCause(world, EnumDropCause.WORLD, x, y, z, world.getBlockMetadata(x, y, z), null, null);
+                        }
+
+                        world.setBlockAndMetadataWithNotify(x, y, z, this.blockToPlace.id(), 0);
+                     }
+
+                     if (player.getGamemode().consumeBlocks()) {
+                        return new ItemStack(Items.BUCKET);
+                     }
+                  }
+
+                  return stack;
+               } else {
+                  return stack;
+               }
+            }
+         } else {
+            return stack;
+         }
+      }
+   }
+
+   @Override
+   public void onUseByActivator(
+      ItemStack itemStack,
+      TileEntityActivator activatorBlock,
+      World world,
+      Random random,
+      int blockX,
+      int blockY,
+      int blockZ,
+      double offX,
+      double offY,
+      double offZ,
+      Direction direction
+   ) {
+      if (this.blockToPlace == null) {
+         itemStack.itemID = Items.BUCKET.id;
+      } else {
+         int x = blockX + direction.getOffsetX();
+         int y = blockY + direction.getOffsetY();
+         int z = blockZ + direction.getOffsetZ();
+         Block<?> b = world.getBlock(x, y, z);
+         if (b == null || BlockTags.PLACE_OVERWRITES.appliesTo(b) || BlockTags.BROKEN_BY_FLUIDS.appliesTo(b)) {
+            world.setBlockWithNotify(x, y, z, this.blockToPlace.id());
+            itemStack.itemID = Items.BUCKET.id;
+         }
+      }
+   }
+}

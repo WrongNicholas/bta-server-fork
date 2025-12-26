@@ -1,0 +1,277 @@
+[
+  {
+    "name": "minecraft:furnace/block_sugarcane_to_block_sugarcane_baked",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/block_sugarcane"
+      }
+    },
+    "output": {
+      "id": "minecraft:block/block_sugarcane_baked"
+    }
+  },
+  {
+    "name": "minecraft:furnace/cactus_to_cactus_green",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/cactus"
+      }
+    },
+    "output": {
+      "id": "minecraft:item/dye",
+      "meta": 2
+    }
+  },
+  {
+    "name": "minecraft:furnace/clay_to_brick_clay",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:item/clay"
+      }
+    },
+    "output": {
+      "id": "minecraft:item/brick_clay"
+    }
+  },
+  {
+    "name": "minecraft:furnace/coal_ores_to_coal",
+    "type": "minecraft:smelting",
+    "input": {
+      "group": "minecraft:coal_ores"
+    },
+    "output": {
+      "id": "minecraft:item/coal"
+    }
+  },
+  {
+    "name": "minecraft:furnace/cobble_basalt_to_basalt",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/cobble_basalt"
+      }
+    },
+    "output": {
+      "id": "minecraft:block/basalt"
+    }
+  },
+  {
+    "name": "minecraft:furnace/cobble_granite_to_granite",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/cobble_granite"
+      }
+    },
+    "output": {
+      "id": "minecraft:block/granite"
+    }
+  },
+  {
+    "name": "minecraft:furnace/cobble_limestone_to_limestone",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/cobble_limestone"
+      }
+    },
+    "output": {
+      "id": "minecraft:block/limestone"
+    }
+  },
+  {
+    "name": "minecraft:furnace/cobble_netherrack_to_netherrack",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/cobble_netherrack"
+      }
+    },
+    "output": {
+      "id": "minecraft:block/netherrack"
+    }
+  },
+  {
+    "name": "minecraft:furnace/cobble_permafrost_to_permafrost",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/cobble_permafrost"
+      }
+    },
+    "output": {
+      "id": "minecraft:block/permafrost"
+    }
+  },
+  {
+    "name": "minecraft:furnace/cobble_stone_to_stone",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/cobble_stone"
+      }
+    },
+    "output": {
+      "id": "minecraft:block/stone"
+    }
+  },
+  {
+    "name": "minecraft:furnace/diamond_ores_to_diamond",
+    "type": "minecraft:smelting",
+    "input": {
+      "group": "minecraft:diamond_ores"
+    },
+    "output": {
+      "id": "minecraft:item/diamond"
+    }
+  },
+  {
+    "name": "minecraft:furnace/fish_raw_to_fish_cooked",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:item/food_fish_raw"
+      }
+    },
+    "output": {
+      "id": "minecraft:item/food_fish_cooked"
+    }
+  },
+  {
+    "name": "minecraft:furnace/gold_ores_to_gold_ingot",
+    "type": "minecraft:smelting",
+    "input": {
+      "group": "minecraft:gold_ores"
+    },
+    "output": {
+      "id": "minecraft:item/ingot_gold"
+    }
+  },
+  {
+    "name": "minecraft:furnace/iron_ores_to_iron_ingot",
+    "type": "minecraft:smelting",
+    "input": {
+      "group": "minecraft:iron_ores"
+    },
+    "output": {
+      "id": "minecraft:item/ingot_iron"
+    }
+  },
+  {
+    "name": "minecraft:furnace/lapis_ores_to_lapis_lazuli",
+    "type": "minecraft:smelting",
+    "input": {
+      "group": "minecraft:lapis_ores"
+    },
+    "output": {
+      "id": "minecraft:item/dye",
+      "meta": 4
+    }
+  },
+  {
+    "name": "minecraft:furnace/logs_to_charcoal",
+    "type": "minecraft:smelting",
+    "input": {
+      "group": "minecraft:logs"
+    },
+    "output": {
+      "id": "minecraft:item/coal",
+      "meta": 1
+    }
+  },
+  {
+    "name": "minecraft:furnace/mud_to_baked_mud",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/mud"
+      }
+    },
+    "output": {
+      "id": "minecraft:block/mud_baked"
+    }
+  },
+  {
+    "name": "minecraft:furnace/nethercoal_ores_to_nethercoal",
+    "type": "minecraft:smelting",
+    "input": {
+      "group": "minecraft:nethercoal_ores"
+    },
+    "output": {
+      "id": "minecraft:item/nethercoal"
+    }
+  },
+  {
+    "name": "minecraft:furnace/porkchop_raw_to_porkchop_cooked",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:item/food_porkchop_raw"
+      }
+    },
+    "output": {
+      "id": "minecraft:item/food_porkchop_cooked"
+    }
+  },
+  {
+    "name": "minecraft:furnace/raw_gold_to_gold_ingot",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:item/ore_raw_gold"
+      }
+    },
+    "output": {
+      "id": "minecraft:item/ingot_gold"
+    }
+  },
+  {
+    "name": "minecraft:furnace/raw_iron_to_iron_ingot",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:item/ore_raw_iron"
+      }
+    },
+    "output": {
+      "id": "minecraft:item/ingot_iron"
+    }
+  },
+  {
+    "name": "minecraft:furnace/redstone_ores_to_redstone_dust",
+    "type": "minecraft:smelting",
+    "input": {
+      "group": "minecraft:redstone_ores"
+    },
+    "output": {
+      "id": "minecraft:item/dust_redstone"
+    }
+  },
+  {
+    "name": "minecraft:furnace/sand_to_glass",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/sand"
+      }
+    },
+    "output": {
+      "id": "minecraft:block/glass"
+    }
+  },
+  {
+    "name": "minecraft:furnace/sponge_wet_to_sponge_dry",
+    "type": "minecraft:smelting",
+    "input": {
+      "stack": {
+        "id": "minecraft:block/sponge_wet"
+      }
+    },
+    "output": {
+      "id": "minecraft:block/sponge_dry"
+    }
+  }
+]
